@@ -14,6 +14,14 @@ This script loads all necessary packages to run the targets pipeline, then runs 
 
 Running this pipeline requires access to both the successfully run a branch of the NW-CLP-RS repository and access to the ROSSyndicate Google Account. If attempting to reproduce this pipeline, you may need to alter the filepath for the NW-CLP-RS in the yml file. At a future point, when this workflow is stable, this pipeline will be integrated into the NW-CLP-RS pipeline to reduce the interdependence between the two repositories.
 
+This pipeline has been further modified from the original version (modeled after Topp et al) to:
+
+1)  remove the SR mask from the LS4-7 pull
+
+2)  fill mask (0 are masked) and realistic values filtered (Rrs \>-0.01)
+
+3)  mask SR_ATMOS_OPACITY \>0.3 and SR_QA_AEROSOL high flags
+
 ## Install necessary packages
 
 ```{r package_installer, echo = F}
@@ -35,7 +43,6 @@ packages <- c('tidyverse',
               'targets',
               'tarchetypes',
               'yaml',
-              'readr',
               'nhdplusTools',
               'polylabelr',
               'sf')
@@ -49,15 +56,17 @@ You will need to have [installed and initialized the `gcloud CLI`](https://cloud
 
 ### Authentication
 
-To authenticate your GEE account, you must execute the following command in your **zsh** terminal and follow the prompts in your browser:
+To authenticate your GEE account, we will use a Python environment created in the R file 'data_acquisition/src/py/pySetup.R'
 
-`earthengine authenticate`
+```{r}
+source('data_acquisition/py/pySetup.R')
+```
 
-When complete, your terminal will read:
+### Authenticate your instance of GEE
 
-`Successfully saved authorization token.`
-
-This token is valid for 7 days from the time of authentication.
+```{python}
+ee.Authenticate(auth_mode = "gcloud")
+```
 
 ### Initializing your instance of GEE
 
