@@ -13,42 +13,32 @@ Primary repository contact: B Steele <b dot steele at colostate dot edu>
 ## Repository Overview
 
 This repository is powered by {targets}, an r-based workflow manager. In order 
-to use this workflow, you must have a [Google Earth Engine account](https://earthengine.google.com/signup/), 
-and you will need to [download, install, and initialize gcloud](https://cloud.google.com/sdk/docs/install). 
-For common issues with `gcloud`, please 
-[see the notes here](https://github.com/rossyndicate/ROSS_RS_mini_tools/blob/main/helps/CommonIssues.md).
+to use this workflow, you must have a [Google Earth Engine account](https://earthengine.google.com/signup/) 
+and have configured a [Google Cloud Project](https://developers.google.com/earth-engine/cloud/projects) 
+and you will need to 
+[download, install, and initialize gcloud](https://cloud.google.com/sdk/docs/install). 
 
-### Requirements
+## Confirm `gcloud` function
 
-Note, before any code that requires access to Google Earth Engine is run, you must 
-execute the following command in your **zsh** terminal and follow the prompts in 
-your browser:
+It is recommended to run the following command in your **zsh** terminal and 
+follow the prompts in  your browser to ensure that your gcloud is set up correctly.
 
 `earthengine authenticate`
 
-When complete, your terminal will read:
+Follow the prompts in your browser. When completed in the browser, your terminal 
+will also read:
 
 `Successfully saved authorization token.`
 
-This token is valid for 7 days from the time of authentication.
+This token is valid for 7 days from the time of authentication. If this fails,
+see the [common issues](https://github.com/rossyndicate/ROSS_RS_mini_tools/blob/main/helps/CommonIssues.md) or contact B for help troubleshooting.
 
 ## Completing the config.yml file
 
 Configuration of the config.yml file is necessary for this workflow to function.
-
-**[[this section to contain a bunch more info later]]**
-
-### Local Settings
-
-location file: must contain lat, lon, uniqueid
-
-### Google Settings
-
-### Temporal Settings
-
-### Spatial Settings
-
-### Google Earth Engine Settings
+There is an example of a config file within the example_yml folder. See the comments within
+the config.yml file for guidance on parameter definitions and how to format each
+parameter.
 
 ## Running the workflow
 
@@ -60,11 +50,20 @@ two steps to this:
 
 2.  run the `run_targets.Rmd` file
 
+## Workflow output
+
+This workflow will output one file for each spatial extent and each DSWE setting.
+These data have not been filtered for basic QAQC of the Rrs values, for an example 
+of that workflow, see this function. Additionally, inter-mission handoff corrections
+have not yet been applied. These data should not be used for timeseries analysis
+if you are including data from both the Landsat 4/5/7 and Landsat 8/9 without 
+handoff coefficients applied. See XXX for examples of how to apply intermission 
+handoffs for timeseries analysis.
+
 ## Folder architecture
 
  * _targets contains output of the _targets.R package and can be ignored.
- * example_yml contains some example yml files for running this workflow, and the associated
-   location data
+ * example_yml contains some example yml files for running this workflow
  * data_acquisition contains the sourced functions in the _targets.R workflow, as well as an
    `in` and `out` folder which store end-user's data, though these files are not tracked (other
    than the WRS2 shapefile) by GitHub.
