@@ -56,7 +56,7 @@ This workflow will output one file for each spatial extent and each DSWE setting
 These data have not been filtered for basic QAQC of the Rrs values, for an example 
 of that workflow, see this function. Additionally, inter-mission handoff corrections
 have not yet been applied. These data should not be used for timeseries analysis
-if you are including data from both the Landsat 4/5/7 and Landsat 8/9 without 
+if you are including data from both the Landsat 4/5/7 era and Landsat 8/9 era without 
 handoff coefficients applied. See XXX for examples of how to apply intermission 
 handoffs for timeseries analysis.
 
