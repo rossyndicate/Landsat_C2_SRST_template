@@ -69,6 +69,8 @@ source('data_acquisition/py/pySetup.R')
 ### Authenticate your instance of GEE
 
 ```{python}
+import ee
+
 ee.Authenticate(auth_mode = "gcloud")
 ```
 
@@ -87,31 +89,14 @@ the `_targets.R` file if you have renamed the config file from `config.yml`.
 ```{r run_targets, echo = F}
 library(targets)
 
-# run the pipeline
-tar_make()
+{
+  tar_make()
+  
+  tar_visnetwork()
+}
 ```
 
 Only errors that prematurely end the pipeline need to be addressed. Check the 
-network diagram in the next section to confirm you've successfully run the 
+network diagram to confirm you've successfully run the 
 pipeline. As long as your dialog box reads 'end pipeline', this workflow has 
 successfully completed.
-
-### Create a network diagram of the workflow.
-
-```{r create_target_vis, echo=F, message=FALSE}
-# save the mmd file
-writeLines(tar_mermaid(), sep = '\n', 'mermaid/mermaid.mmd')
-```
-
-```{r write_mermaid, echo = F, message = F}
-# save the mmd file
-writeLines(tar_mermaid(), sep = '\n', 'mermaid/mermaid.mmd')
-```
-
-```{zsh create_mermaid_png}
-mmdc -i mermaid/mermaid.mmd -o mermaid/mermaid.png -t dark -w 4000 -H 1000
-```
-
-![](mermaid/mermaid.png)
-
-In order to view [legible] text, right click the image and open in a new window. The `centers` icon will be marked red as errored - this is because the config file is not set to calculate centers for this pipeline.
