@@ -204,7 +204,7 @@ for e in extent:
       print('Starting Landsat 4, 5, 7 DSWE 1 acquisition for ' + e + ' configuration at tile ' + str(tiles))
       locs_out_457_D1 = locs_stack_ls457.map(ref_pull_457_DSWE1).flatten()
       locs_out_457_D1 = locs_out_457_D1.filter(ee.Filter.notNull(['med_Blue']))
-      locs_srname_457_D1 = proj+'_point_LS457_C2_SRST_DSWE1_'+str(tiles)+'_v'+run_date
+      locs_srname_457_D1 = proj+'_'+e+'_LS457_C2_SRST_DSWE1_'+str(tiles)+'_v'+run_date
       locs_dataOut_457_D1 = (ee.batch.Export.table.toDrive(collection = locs_out_457_D1,
                                               description = locs_srname_457_D1,
                                               folder = proj_folder,
@@ -228,7 +228,7 @@ for e in extent:
       print('Starting Landsat 4, 5, 7 DSWE 1a acquisition for ' + e + ' configuration at tile ' + str(tiles))
       locs_out_457_D1a = locs_stack_ls457.map(ref_pull_457_DSWE1a).flatten()
       locs_out_457_D1a = locs_out_457_D1a.filter(ee.Filter.notNull(['med_Blue']))
-      locs_srname_457_D1a = proj+'_point_LS457_C2_SRST_DSWE1a_'+str(tiles)+'_v'+run_date
+      locs_srname_457_D1a = proj+'_'+e+'_LS457_C2_SRST_DSWE1a_'+str(tiles)+'_v'+run_date
       locs_dataOut_457_D1a = (ee.batch.Export.table.toDrive(collection = locs_out_457_D1a,
                                               description = locs_srname_457_D1a,
                                               folder = proj_folder,
@@ -256,7 +256,7 @@ for e in extent:
       print('Starting Landsat 4, 5, 7 DSWE1 acquisition for ' + e + ' configuration at tile ' + str(tiles))
       locs_out_457_D1 = locs_stack_ls457.map(ref_pull_457_DSWE1).flatten()
       locs_out_457_D1 = locs_out_457_D1.filter(ee.Filter.notNull(['med_Blue']))
-      locs_srname_457_D1 = proj+'_point_LS457_C2_SRST_DSWE1_'+str(tiles)+'_v'+run_date
+      locs_srname_457_D1 = proj+'_'+e+'_LS457_C2_SRST_DSWE1_'+str(tiles)+'_v'+run_date
       locs_dataOut_457_D1 = (ee.batch.Export.table.toDrive(collection = locs_out_457_D1,
                                               description = locs_srname_457_D1,
                                               folder = proj_folder,
@@ -286,7 +286,7 @@ for e in extent:
     print('Starting Landsat 4, 5, 7 DSWE3 acquisition for ' + e + ' configuration at tile ' + str(tiles))
     locs_out_457_D3 = locs_stack_ls457.map(ref_pull_457_DSWE3).flatten()
     locs_out_457_D3 = locs_out_457_D3.filter(ee.Filter.notNull(['med_Blue']))
-    locs_srname_457_D3 = proj+'_point_LS457_C2_SRST_DSWE3_'+str(tiles)+'_v'+run_date
+    locs_srname_457_D3 = proj+'_'+e+'_LS457_C2_SRST_DSWE3_'+str(tiles)+'_v'+run_date
     locs_dataOut_457_D3 = (ee.batch.Export.table.toDrive(collection = locs_out_457_D3,
                                             description = locs_srname_457_D3,
                                             folder = proj_folder,
@@ -354,7 +354,7 @@ for e in extent:
       print('Starting Landsat 8, 9 DSWE1 acquisition for ' + e + ' configuration at tile ' + str(tiles))
       locs_out_89_D1 = locs_stack_ls89.map(ref_pull_89_DSWE1).flatten()
       locs_out_89_D1 = locs_out_89_D1.filter(ee.Filter.notNull(['med_Blue']))
-      locs_srname_89_D1 = proj+'_point_LS89_C2_SRST_DSWE1_'+str(tiles)+'_v'+run_date
+      locs_srname_89_D1 = proj+'_'+ e + '_LS89_C2_SRST_DSWE1_'+str(tiles)+'_v'+run_date
       locs_dataOut_89_D1 = (ee.batch.Export.table.toDrive(collection = locs_out_89_D1,
                                               description = locs_srname_89_D1,
                                               folder = proj_folder,
@@ -378,7 +378,7 @@ for e in extent:
       print('Starting Landsat 8, 9 DSWE 1a acquisition for ' + e + ' configuration at tile ' + str(tiles))
       locs_out_89_D1a = locs_stack_ls89.map(ref_pull_89_DSWE1a).flatten()
       locs_out_89_D1a = locs_out_89_D1a.filter(ee.Filter.notNull(['med_Blue']))
-      locs_srname_89_D1a = proj+'_point_LS89_C2_SRST_DSWE1a_'+str(tiles)+'_v'+run_date
+      locs_srname_89_D1a = proj+'_'+e+'_LS89_C2_SRST_DSWE1a_'+str(tiles)+'_v'+run_date
       locs_dataOut_89_D1a = (ee.batch.Export.table.toDrive(collection = locs_out_89_D1a,
                                               description = locs_srname_89_D1a,
                                               folder = proj_folder,
@@ -404,7 +404,7 @@ for e in extent:
       print('Starting Landsat 8, 9 DSWE1 acquisition for ' + e + ' configuration at tile ' + str(tiles))
       locs_out_89_D1 = locs_stack_ls89.map(ref_pull_89_DSWE1).flatten()
       locs_out_89_D1 = locs_out_89_D1.filter(ee.Filter.notNull(['med_Blue']))
-      locs_srname_89_D1 = proj+'_point_LS89_C2_SRST_DSWE1_'+str(tiles)+'_v'+run_date
+      locs_srname_89_D1 = proj+'_'+e+'_LS89_C2_SRST_DSWE1_'+str(tiles)+'_v'+run_date
       locs_dataOut_89_D1 = (ee.batch.Export.table.toDrive(collection = locs_out_89_D1,
                                               description = locs_srname_89_D1,
                                               folder = proj_folder,
@@ -432,7 +432,7 @@ for e in extent:
     print('Starting Landsat 8, 9 DSWE3 acquisition for ' + e + ' configuration at tile ' + str(tiles))
     locs_out_89_D3 = locs_stack_ls89.map(ref_pull_89_DSWE3).flatten()
     locs_out_89_D3 = locs_out_89_D3.filter(ee.Filter.notNull(['med_Blue']))
-    locs_srname_89_D3 = proj+'_point_LS89_C2_SRST_DSWE3_'+str(tiles)+'_v'+run_date
+    locs_srname_89_D3 = proj+'_'+e+'_LS89_C2_SRST_DSWE3_'+str(tiles)+'_v'+run_date
     locs_dataOut_89_D3 = (ee.batch.Export.table.toDrive(collection = locs_out_89_D3,
                                             description = locs_srname_89_D3,
                                             folder = proj_folder,

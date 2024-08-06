@@ -2,7 +2,7 @@ library(targets)
 library(tarchetypes)
 library(reticulate)
 
-yaml_file <- "config.yml"
+yaml_file <- "example//example_config.yml"
 
 # MUST READ ---------------------------------------------------------------
 
@@ -141,5 +141,53 @@ list(
     },
     pattern = map(WRS_tiles),
     packages = "reticulate"
+  ),
+  
+  # wait for all earth engine tasks to be completed
+  tar_target(
+    name = ee_tasks_complete,
+    command = {
+      eeRun
+      source_python("data_acquisition/py/poi_wait_for_completion.py")
+    },
+    packages = "reticulate"
+  ),
+  
+  # download all files
+  tar_target(
+    name = download_files,
+    command = {
+      ee_tasks_complete
+      download_csvs_from_drive(drive_folder_name = yml$proj_folder,
+                               google_email = yml$google_email,
+                               version_identifier = yml$run_date)
+    },
+    packages = c("tidyverse", "googledrive")
+  ),
+  
+  # collate all files
+  tar_target(
+    name = make_collated_data_files,
+    command = {
+      download_files
+      collate_csvs_from_drive(file_prefix = yml$proj, 
+                              version_identifier = yml$run_date)
+    },
+    packages = c('tidyverse', 'feather')
+  ),
+  
+  # and collate the data with metadata
+  tar_target(
+    name = make_files_with_metadata,
+    command = {
+      make_collated_data_files
+      add_metadata(yaml = yml,
+                   file_prefix = yml$proj,
+                   version_identifier = yml$run_date,
+                   collation_identifier = "2024-08-01")
+    },
+    packages = c("tidyverse", "feather")
   )
+  
+  
 )

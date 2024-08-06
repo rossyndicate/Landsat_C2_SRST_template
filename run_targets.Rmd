@@ -60,7 +60,8 @@ prior to running this workflow. Some common troubleshooting solutions
 ### Authentication
 
 To authenticate your GEE account, we will use a Python environment created in the 
-R file 'data_acquisition/src/py/pySetup.R'
+R file 'data_acquisition/src/py/pySetup.R'. This will take a few minutes if you 
+haven't yet run the python setup script while it creates a virtual environment.
 
 ```{r}
 source('data_acquisition/py/pySetup.R')
@@ -71,7 +72,7 @@ source('data_acquisition/py/pySetup.R')
 ```{python}
 import ee
 
-ee.Authenticate(auth_mode = "gcloud")
+ee.Authenticate(auth_mode = 'localhost')
 ```
 
 ### Initializing your instance of GEE

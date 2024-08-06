@@ -26,6 +26,8 @@ local_settings:
 - poly_file: "" # optional. Name of the shapefile that contains the lake polygons. 
 
 google_settings:
+- google_email: "" # enter your google email address associated with the Earth Engine
+# credentials
 - proj: "" # this is a short name for file naming conventions. All output 
 # files will include this prefix.
 - proj_folder: "" # this is the folder name where the GEE data will be save to 

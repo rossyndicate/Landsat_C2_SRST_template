@@ -14,7 +14,7 @@
 #' 
 get_NHD <- function(locations, yaml) {
   if (grepl("poly", yaml$extent[1])) { # if polygon is specified in desired extent - either polycenter or polgon
-    if (yaml$polygon[1] == "False") { # and no polygon is provided, then use nhdplustools
+    if (!yaml$polygon[1]) { # and no polygon is provided, then use nhdplustools
       # create sf
       wbd_pts <- st_as_sf(locations, 
                           crs = yaml$location_crs[1], 
@@ -42,7 +42,7 @@ get_NHD <- function(locations, yaml) {
       polygons <- st_make_valid(polygons)
       st_drop_geometry(polygons) %>% 
         rowid_to_column("r_id") %>% 
-        mutate(py_id = r_id - 1) %>% #subract 1 so that it matches with Py output
+        mutate(py_id = r_id - 1) %>% #subtract 1 so that it matches with Py output
         write_csv(., "data_acquisition/out/user_polygon_withrowid.csv")
       st_write(polygons, "data_acquisition/out/user_polygon.shp", append = F)
       return("data_acquisition/out/user_polygon.shp")
