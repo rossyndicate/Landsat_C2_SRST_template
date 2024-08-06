@@ -32,7 +32,7 @@ spatial_settings:
 
 gee_settings:
 - cloud_filter: "True" # True or False - if True, scenes will be filtered by scene-level cloudy value provided in the metadata
-- cloud_thresh: 95 # scenes with a cloud value greater than this threshold will be filtered out
+- cloud_thresh: 75 # scenes with a cloud value greater than this threshold will be filtered out
 - water_detection: "DSWE" # "DSWE" is currently the only option for water detection. Future iterations may include Peckel water instance or another method.
 # 1: DSWE 1 only summarizes high confidence water pixels
 # 3: DSWE 3 summarizes vegetated pixels. 
