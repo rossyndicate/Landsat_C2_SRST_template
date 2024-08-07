@@ -13,27 +13,34 @@
 #' 
 #' 
 get_NHD <- function(locations, yaml) {
-  if (grepl("poly", yaml$extent[1])) { # if polygon is specified in desired extent - either polycenter or polgon
-    if (!yaml$polygon[1]) { # and no polygon is provided, then use nhdplustools
-      # create sf
-      wbd_pts <- st_as_sf(locations, 
-                          crs = yaml$location_crs[1], 
-                          coords = c("Longitude", "Latitude"))
-      id = locations$id
-      for (w in 1:length(id)) {
-        aoi_name <- wbd_pts[wbd_pts$id == id[w],]
-        lake <- get_waterbodies(AOI = aoi_name)
-        if (w == 1) {
-          all_lakes <- lake
+  if (grepl("poly", yaml$extent)) { # if polygon is specified in desired extent - either polycenter or polgon
+    if (!yaml$polygon) { # and no polygon is provided, then use nhdplustools
+      for (w in 1:nrow(locations)) {
+        id <- locations$id[w]
+        # create sf
+        point <- st_as_sf(locations[w,], 
+                            crs = yaml$location_crs, 
+                            coords = c("Longitude", "Latitude"))
+        wbd <- get_waterbodies(AOI = point) 
+        # if there is now waterbody, skip to next iteration
+        if (is.null(wbd)) {
+          next
+        } else { 
+          # otherwise add the r_id
+          wbd <- wbd %>% 
+            mutate(r_id = id)
+        }
+        if (!exists("all_lakes")) {
+          all_lakes <- wbd 
         } else {
-          all_lakes <- rbind(all_lakes, lake)
+          all_lakes <- rbind(all_lakes, wbd)
         }
       }
       all_lakes <- all_lakes %>% 
-        select(id, comid, gnis_id:elevation, meandepth:maxdepth)
+        select(r_id, comid, gnis_id:elevation, meandepth:maxdepth)
       write_csv(st_drop_geometry(all_lakes), 
                 "data_acquisition/out/NHDPlus_stats_lakes.csv")
-      all_lakes <- all_lakes %>% select(id, comid, gnis_name)
+      all_lakes <- all_lakes %>% select(r_id, comid, gnis_name)
       st_write(all_lakes, "data_acquisition/out/NHDPlus_polygon.shp", append = F)
       return("data_acquisition/out/NHDPlus_polygon.shp")
     } else { # otherwise read in specified file
@@ -41,7 +48,7 @@ get_NHD <- function(locations, yaml) {
       polygons <- st_zm(polygons)#drop z or m if present
       polygons <- st_make_valid(polygons)
       st_drop_geometry(polygons) %>% 
-        rowid_to_column("r_id") %>% 
+        rename(r_id = yaml$unique_id) %>% 
         mutate(py_id = r_id - 1) %>% #subtract 1 so that it matches with Py output
         write_csv(., "data_acquisition/out/user_polygon_withrowid.csv")
       st_write(polygons, "data_acquisition/out/user_polygon.shp", append = F)

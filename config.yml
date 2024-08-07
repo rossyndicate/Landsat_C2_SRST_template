@@ -17,7 +17,8 @@ local_settings:
 - location_crs: "" # this is the coordinate reference system of the location data, 
 # must be in EPSG format (e.g. EPSG:4326)
 - polygon: "" # optional. True or False - if True, you have lake polygon shapefiles 
-# for each site. If False, and polygon acquisition is indicated in spatial settings, 
+# for each site that has an index of the same name as your location file unique_id
+# field. If False, and polygon acquisition is indicated in spatial settings, 
 # the workflow will use the NHDPlus to define the polygon.
 - poly_crs: "" # optional. This is the coordinate reference system of the polygon 
 # data, must be in EPSG format (e.g. EPSG:4326)

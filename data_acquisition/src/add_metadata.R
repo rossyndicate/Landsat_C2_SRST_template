@@ -16,7 +16,7 @@
 #' 
 add_metadata <- function(yaml,
                          file_prefix, 
-                         version_identifier, 
+                         version_identifier,
                          collation_identifier) {
   
   files <- list.files(file.path("data_acquisition/mid/"),
@@ -59,20 +59,39 @@ add_metadata <- function(yaml,
     # store extent as string present in file names
     if (e == "site") {
       ext <- "point"
+    } else if (e == "polycenter") {
+      ext <- "center"
     } else {
-      if (e == "polycenter") {
-        ext <- "center"
-      } else {
       ext <- e
-      }
     }
+  
     # get file using ext
     file <- files[grepl(ext, files)]
     # load file
     df <- read_feather(file)
+    
+    if (e == "site") {
+      spatial_info <- read_csv(file.path(yaml$data_dir,
+                                         yaml$location_file)) %>% 
+        rename(r_id = yaml$unique_id)%>% 
+        mutate(r_id = as.character(r_id))
+    } else if (e == "polycenter") {
+      spatial_info <- read_csv("data_acquisition/out/NHDPlus_polygon_centers.csv") %>% 
+        mutate(r_id = as.character(r_id))
+    } else if (e == "polygon") {
+      if (yaml$polygon) {
+        spatial_info <- read_sf(file.path(yaml$poly_dir,
+                                          yaml$poly_file)) %>% 
+          st_drop_geometry() %>% 
+          mutate(r_id = as.character(r_id))
+      } else {
+        spatial_info <- read_csv('data_acquisition/out/NHDPlus_stats_lakes.csv') %>% 
+          mutate(r_id = as.character(r_id))
+      }
+    }
     # format system index for join - right now it has a rowid and the unique LS id
     # could also do this rowwise, but this method is a little faster
-    df$rowid <- map_chr(.x = df$`system:index`, 
+    df$r_id <- map_chr(.x = df$`system:index`, 
                             function(.x) {
                               parsed <- str_split(.x, '_')
                               str_len <- length(unlist(parsed))
@@ -89,7 +108,8 @@ add_metadata <- function(yaml,
     df <- df %>% 
       select(-`system:index`) %>% 
       left_join(., metadata_light) %>% 
-      mutate(DSWE = str_split(source, "_")[[1]][7], .by = source)
+      mutate(DSWE = str_split(source, "_")[[1]][7], .by = source) %>% 
+      left_join(., spatial_info)
     
     # break out the DSWE 1 data
     if (nrow(df %>% filter(DSWE == 'DSWE1')) > 0) {
@@ -118,6 +138,7 @@ add_metadata <- function(yaml,
                                      collation_identifier,
                                      ".feather")))
     }
+    
     # and the DSWE 3 data
     if (nrow(df %>% filter(DSWE == 'DSWE3')) > 0) {
       DSWE3 <- df %>%
