@@ -2,7 +2,7 @@ library(targets)
 library(tarchetypes)
 library(reticulate)
 
-yaml_file <- "example//example_config.yml"
+yaml_file <- "config.yml"
 
 # MUST READ ---------------------------------------------------------------
 

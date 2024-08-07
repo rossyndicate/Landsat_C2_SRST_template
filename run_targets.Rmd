@@ -1,6 +1,5 @@
 ---
 title: "Run Targets - Landsat Collection 2 SR/ST Acquisition"
-subtitle: "Northern Water and Cache La Poudre Branch"
 date: "`r Sys.Date()`"
 author: "ROSSyndicate"
 output:
@@ -10,17 +9,9 @@ output:
 
 # Purpose
 
-This script loads all necessary packages to run the targets pipeline, then runs it! This particular instance pulls the historical Landsat record for Northern Water and all reservoirs greater than 0.01km\^2 in the Cache La Poudre HUC 8 watershed. The locations file referenced in the yaml config file was generated in targets branch "a" of the [NW-CLP-RS repository](https://github.com/rossyndicate/NW-CLP-RS).
-
-Running this pipeline requires access to both the successfully run a branch of the NW-CLP-RS repository and access to the ROSSyndicate Google Account. If attempting to reproduce this pipeline, you may need to alter the filepath for the NW-CLP-RS in the yml file. At a future point, when this workflow is stable, this pipeline will be integrated into the NW-CLP-RS pipeline to reduce the interdependence between the two repositories.
-
-This pipeline has been further modified from the original version (modeled after Topp et al) to:
-
-1)  remove the SR mask from the LS4-7 pull
-
-2)  fill mask (0 are masked) and realistic values filtered (Rrs \>-0.01)
-
-3)  mask SR_ATMOS_OPACITY \>0.3 and SR_QA_AEROSOL high flags
+This is a helper script that loads all necessary packages to run the targets 
+pipeline, then runs it to acquire Landsat Collection 2 surface reflectance and
+surface temperature for user-defined areas of interest (AOI).
 
 ## Install necessary packages
 
@@ -75,11 +66,6 @@ import ee
 ee.Authenticate(auth_mode = 'localhost')
 ```
 
-### Initializing your instance of GEE
-
-Initialization through the Python command `ee.Initialize()` is automatically 
-completed in the workflow.
-
 ## Run the targets pipeline and output a network graph.
 
 Prior to running this pipeline, you'll need to populate the `config.yml` file 
@@ -97,7 +83,4 @@ library(targets)
 }
 ```
 
-Only errors that prematurely end the pipeline need to be addressed. Check the 
-network diagram to confirm you've successfully run the 
-pipeline. As long as your dialog box reads 'end pipeline', this workflow has 
-successfully completed.
+
