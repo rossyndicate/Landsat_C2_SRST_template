@@ -24,9 +24,6 @@ calc_center <- function(poly, yaml) {
       poi_latitude = numeric(),
       poi_dist_m = numeric()
     )
-    # create rowids for proper indexing
-    poly <- poly %>% 
-      rowid_to_column("r_id")
     for (i in 1:length(poly[[1]])) {
       poi_df  <- poi_df %>% add_row()
       # grab one polygon
