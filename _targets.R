@@ -74,7 +74,8 @@ list(
     name = locs,
     command = locs_save,
     read = read_csv(!!.x),
-    packages = "readr"
+    packages = "readr",
+    error = "null"
   ),
   
   # use location shapefile and configurations to get polygons from NHDPlusv2
@@ -182,8 +183,7 @@ list(
       make_collated_data_files
       add_metadata(yaml = yml,
                    file_prefix = yml$proj,
-                   version_identifier = yml$run_date,
-                   collation_identifier = "2024-08-01")
+                   version_identifier = yml$run_date)
     },
     packages = c("tidyverse", "feather")
   )
