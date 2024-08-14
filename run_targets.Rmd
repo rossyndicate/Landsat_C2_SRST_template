@@ -76,6 +76,13 @@ with the information for the Landsat Surface Reflectance and Surface Temperature
 Collection 2 product stack pull. Additionally, you will need to change line 5 of 
 the `_targets.R` file if you have renamed the config file from `config.yml`.
 
+If you wish to run the example_config.yml pull, you will need to change the following
+.yml settings to those associated with your computer and/or google account information:
+
+- Line 8: data_dir
+- Line 20: google_email
+- Line 23: ee_proj 
+
 ```{r run_targets, echo = F}
 library(targets)
 
