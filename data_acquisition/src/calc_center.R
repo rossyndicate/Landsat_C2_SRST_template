@@ -16,6 +16,9 @@
 #' 
 #' 
 calc_center <- function(poly, yaml) {
+  if (!dir.exists("data_acquisition/out/")) {
+    dir.create("data_acquisition/out/")
+  }
   if (grepl("center", yaml$extent[1])) {
     # create an empty tibble
     poi_df <- tibble(

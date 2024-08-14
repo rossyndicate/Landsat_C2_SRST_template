@@ -2,7 +2,7 @@ library(targets)
 library(tarchetypes)
 library(reticulate)
 
-yaml_file <- "config.yml"
+yaml_file <- "example/example_config.yml"
 
 # MUST READ ---------------------------------------------------------------
 
@@ -25,7 +25,6 @@ tar_source("data_acquisition/py/pySetup.R")
 # Source functions --------------------------------------------------------
 
 tar_source("data_acquisition/src/")
-source_python("data_acquisition/py/gee_functions.py")
 
 
 # Define {targets} workflow -----------------------------------------------

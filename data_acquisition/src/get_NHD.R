@@ -13,6 +13,9 @@
 #' 
 #' 
 get_NHD <- function(locations, yaml) {
+  if (!dir.exists("data_acquisition/out/")) {
+    dir.create("data_acquisition/out/")
+  }
   if (grepl("poly", yaml$extent)) { # if polygon is specified in desired extent - either polycenter or polgon
     if (!yaml$polygon) { # and no polygon is provided, then use nhdplustools
       for (w in 1:nrow(locations)) {
